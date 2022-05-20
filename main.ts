@@ -1,0 +1,30 @@
+basic.showIcon(IconNames.No)
+ESP8266ThingSpeak.connectWifi(
+SerialPin.P0,
+SerialPin.P1,
+BaudRate.BaudRate115200,
+"HABLAND-45",
+"habland0846"
+)
+basic.forever(function () {
+    dht11_dht22.queryData(
+    DHTtype.DHT11,
+    DigitalPin.P2,
+    true,
+    false,
+    true
+    )
+    ESP8266ThingSpeak.connectThingSpeak(
+    "api.thingspeak.com",
+    "ZKDPOF1FZOEJWE80",
+    dht11_dht22.readData(dataType.temperature),
+    dht11_dht22.readData(dataType.humidity),
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+    )
+    ESP8266ThingSpeak.wait(5000)
+})
